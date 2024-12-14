@@ -1,0 +1,19 @@
+{
+  "name": "assignment-practice",
+  "private": true,
+  "scripts": {
+    "start-server": "pnpm --filter backend start",
+    "start-client": "pnpm --filter frontend dev",
+    "test-client": "pnpm --filter frontend test",
+    "test-client:watch": "pnpm --filter frontend test:watch"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120,
+    "semi": false
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}
