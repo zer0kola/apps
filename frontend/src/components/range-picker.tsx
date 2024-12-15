@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { addDays, format } from 'date-fns'
+import dayjs from 'dayjs'
 import { CalendarIcon } from 'lucide-react'
 import { DateRange } from 'react-day-picker'
 
@@ -9,12 +9,20 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { purchaseFrequencyRangeAtom } from '@/store/purchase-frequency/atom'
+import { useAtom } from 'jotai'
 
 export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivElement>) {
-  const [date, setDate] = React.useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 1),
-  })
+  const [date, setDate] = useAtom(purchaseFrequencyRangeAtom)
+
+  const handleSelect = (range: DateRange | undefined) => {
+    if (!range) return
+    setDate({
+      from: range.from?.toISOString() ?? date.from,
+      to: range.to?.toISOString() ?? date.to,
+      isInvalid: false,
+    })
+  }
 
   return (
     <div className={cn('grid gap-2', className)}>
@@ -29,10 +37,10 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, 'yyyy.MM.dd')} - {format(date.to, 'yyyy.MM.dd')}
+                  {dayjs(date.from).format('YYYY-MM-DD')} - {dayjs(date.to).format('YYYY-MM-DD')}
                 </>
               ) : (
-                format(date.from, 'yyyy.MM.dd')
+                dayjs(date.from).format('YYYY-MM-DD')
               )
             ) : (
               <span>날짜 선택</span>
@@ -43,9 +51,9 @@ export function DatePickerWithRange({ className }: React.HTMLAttributes<HTMLDivE
           <Calendar
             initialFocus
             mode="range"
-            defaultMonth={date?.from}
-            selected={date}
-            onSelect={setDate}
+            defaultMonth={new Date(date.from)}
+            selected={{ from: new Date(date.from), to: new Date(date.to) }}
+            onSelect={handleSelect}
             numberOfMonths={2}
           />
         </PopoverContent>

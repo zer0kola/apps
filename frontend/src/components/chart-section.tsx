@@ -4,10 +4,14 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from 'recharts'
 import { useQuery } from '@tanstack/react-query'
 import { purchaseFrequencyQueryOptions } from '@/api/query'
+import { useAtom } from 'jotai'
+import { purchaseFrequencyRangeAtom } from '@/store/purchase-frequency/atom'
 
 export const ChartSection = () => {
+  const [date] = useAtom(purchaseFrequencyRangeAtom)
+
   const { data: purchaseFrequency } = useQuery(
-    purchaseFrequencyQueryOptions({ from: '2024-07-01', to: '2024-07-31', isInvalid: false }),
+    purchaseFrequencyQueryOptions({ from: date.from, to: date.to, isInvalid: date.isInvalid }),
   )
 
   return (
