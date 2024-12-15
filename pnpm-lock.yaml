@@ -75,6 +75,9 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
+      jotai:
+        specifier: ^2.10.3
+        version: 2.10.3(@types/react@18.3.16)(react@18.3.1)
       ky:
         specifier: ^1.7.3
         version: 1.7.3
@@ -102,9 +105,6 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.16(ts-node@10.9.2(@types/node@22.10.2)(typescript@5.7.2)))
-      zustand:
-        specifier: ^5.0.2
-        version: 5.0.2(@types/react@18.3.16)(react@18.3.1)
     devDependencies:
       '@types/node':
         specifier: ^22.10.2
@@ -1623,6 +1623,18 @@ packages:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
     hasBin: true
 
+  jotai@2.10.3:
+    resolution: {integrity: sha512-Nnf4IwrLhNfuz2JOQLI0V/AgwcpxvVy8Ec8PidIIDeRi4KCFpwTFIpHAAcU+yCgnw/oASYElq9UY0YdUUegsSA==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -2397,24 +2409,6 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-
-  zustand@5.0.2:
-    resolution: {integrity: sha512-8qNdnJVJlHlrKXi50LDqqUNmUbuBjoKLrYQBnoChIbVph7vni+sY+YpvdjXG9YLd/Bxr6scMcR+rm5H3aSqPaw==}
-    engines: {node: '>=12.20.0'}
-    peerDependencies:
-      '@types/react': '>=18.0.0'
-      immer: '>=9.0.6'
-      react: '>=18.0.0'
-      use-sync-external-store: '>=1.2.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      immer:
-        optional: true
-      react:
-        optional: true
-      use-sync-external-store:
-        optional: true
 
 snapshots:
 
@@ -3857,6 +3851,11 @@ snapshots:
 
   jiti@1.21.6: {}
 
+  jotai@2.10.3(@types/react@18.3.16)(react@18.3.1):
+    optionalDependencies:
+      '@types/react': 18.3.16
+      react: 18.3.1
+
   js-tokens@4.0.0: {}
 
   js-yaml@4.1.0:
@@ -4618,8 +4617,3 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
-
-  zustand@5.0.2(@types/react@18.3.16)(react@18.3.1):
-    optionalDependencies:
-      '@types/react': 18.3.16
-      react: 18.3.1
