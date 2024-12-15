@@ -1,11 +1,5 @@
-import { Button } from '@/components/ui/button'
-
 function App() {
-  return (
-    <main>
-      <Button>Click me</Button>
-    </main>
-  )
+  return <main className="flex min-h-screen flex-col items-center justify-center bg-background"></main>
 }
 
 export default App
