@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { DatePickerWithRange } from '@/components/range-picker'
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
-import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from 'recharts'
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 import { useQuery } from '@tanstack/react-query'
 import { purchaseFrequencyQueryOptions } from '@/api/query'
 import { useAtom } from 'jotai'
@@ -35,7 +35,6 @@ export const ChartSection = () => {
             <XAxis dataKey="range" />
             <YAxis />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Legend verticalAlign="top" height={36} />
             <Bar dataKey="count" fill="var(--color-count)" />
           </BarChart>
         </ChartContainer>
