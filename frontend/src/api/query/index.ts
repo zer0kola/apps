@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid'
 import apiInstance from '@/lib/api-instance'
+import { convertPurchaseFrequencyDataToKRW } from '@/lib/chart'
 import { queryOptions, keepPreviousData } from '@tanstack/react-query'
 import type { Customer, Purchase, PurchaseWithId, PurchaseFrequencyRange, PurchaseFrequency } from '@/api/types'
 
@@ -14,6 +15,7 @@ export const purchaseFrequencyQueryOptions = ({ from, to, isInvalid }: PurchaseF
   queryOptions({
     queryKey: ['purchaseFrequency', from, to],
     queryFn: () => apiInstance.get('purchase-frequency', { searchParams: { from, to } }).json<PurchaseFrequency[]>(),
+    select: (data) => convertPurchaseFrequencyDataToKRW(data),
     throwOnError: true,
     enabled: !isInvalid,
   })
