@@ -21,3 +21,9 @@ export interface Purchase {
 export interface PurchaseWithId extends Purchase {
   id: string
 }
+
+export type PurchaseFrequencyRange = {
+  from: string
+  to: string
+  isInvalid: boolean
+}
