@@ -1,8 +1,8 @@
-import ky from 'ky'
+import axios from 'axios'
 
-const apiInstance = ky.extend({
-  prefixUrl: 'http://localhost:4000/api',
-  retry: 0,
+const apiInstance = axios.create({
+  baseURL: 'http://localhost:4000/api',
+  timeout: 10000,
 })
 
 export default apiInstance

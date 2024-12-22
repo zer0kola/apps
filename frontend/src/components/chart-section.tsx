@@ -15,7 +15,7 @@ export const ChartSection = () => {
   )
 
   return (
-    <Card className="w-full h-96 max-w-6xl mx-auto mt-10 bg-white">
+    <Card className="w-full min-w-[900px] h-96 max-w-6xl bg-white">
       <CardHeader className="gap-2 flex-row items-center justify-between">
         <CardTitle>가격대별 구매 횟수</CardTitle>
         <DatePickerWithRange />

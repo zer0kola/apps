@@ -2,7 +2,7 @@ import { nanoid } from 'nanoid'
 import apiInstance from '@/lib/api-instance'
 import { convertPurchaseFrequencyDataToKRW } from '@/lib/chart'
 import { queryOptions, keepPreviousData } from '@tanstack/react-query'
-import type { Customer, Purchase, PurchaseWithId, PurchaseFrequencyRange, PurchaseFrequency } from '@/api/types'
+import type { Customer, Purchase, PurchaseWithId, PurchaseFrequencyRange } from '@/api/types'
 
 /**
  * 구매 빈도 조회 옵션
@@ -14,7 +14,7 @@ import type { Customer, Purchase, PurchaseWithId, PurchaseFrequencyRange, Purcha
 export const purchaseFrequencyQueryOptions = ({ from, to, isInvalid }: PurchaseFrequencyRange) =>
   queryOptions({
     queryKey: ['purchaseFrequency', from, to],
-    queryFn: () => apiInstance.get('purchase-frequency', { searchParams: { from, to } }).json<PurchaseFrequency[]>(),
+    queryFn: () => apiInstance.get('purchase-frequency', { params: { from, to } }).then((res) => res.data),
     select: (data) => convertPurchaseFrequencyDataToKRW(data),
     throwOnError: true,
     enabled: !isInvalid,
@@ -31,9 +31,9 @@ export const customersQueryOptions = (searchParams = { sortBy: '', name: '' }) =
     queryFn: () =>
       apiInstance
         .get('customers', {
-          searchParams,
+          params: searchParams,
         })
-        .json<Customer[]>(),
+        .then((res) => res.data),
     select: (data) => data,
     placeholderData: keepPreviousData,
   })
@@ -41,7 +41,7 @@ export const customersQueryOptions = (searchParams = { sortBy: '', name: '' }) =
 export const customerPurchasesQueryOptions = ({ id }: Partial<Pick<Customer, 'id'>>) =>
   queryOptions<Purchase[], unknown, PurchaseWithId[]>({
     queryKey: ['customerPurchases', id],
-    queryFn: () => apiInstance.get(`customers/${id}/purchases`).json<Purchase[]>(),
+    queryFn: () => apiInstance.get(`customers/${id}/purchases`).then((res) => res.data),
     select: (data) => data.map((purchase) => ({ ...purchase, id: nanoid() })),
     throwOnError: true,
     enabled: !!id,
