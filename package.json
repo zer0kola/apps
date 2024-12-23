@@ -2,7 +2,7 @@
   "name": "assignment-practice",
   "private": true,
   "scripts": {
-    "start-server": "pnpm --filter backend start",
+    "start-server": "pnpm --filter backend start:dev",
     "start-client": "pnpm --filter frontend dev",
     "test-client": "pnpm --filter frontend test",
     "test-client:watch": "pnpm --filter frontend test:watch"
