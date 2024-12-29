@@ -12,16 +12,14 @@ import { debounce } from 'es-toolkit'
 export const GridSection = () => {
   const [searchName, setSearchName] = useState('')
 
-  const debouncedSetSearchName = useCallback(
-    debounce((value: string) => {
-      setSearchName(value)
-    }, 300),
-    [],
-  )
+  const debouncedSetSearchName = useMemo(() => debounce((value: string) => setSearchName(value), 300), [setSearchName])
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    debouncedSetSearchName(e.target.value)
-  }
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      debouncedSetSearchName(e.target.value)
+    },
+    [debouncedSetSearchName],
+  )
 
   const columnDefs = useMemo<ColDef<Customer>[]>(
     () => [
