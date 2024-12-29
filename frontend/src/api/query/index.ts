@@ -25,9 +25,9 @@ export const purchaseFrequencyQueryOptions = ({ from, to, isInvalid }: PurchaseF
  * @param searchParams 검색 조건
  * @returns 고객 목록
  */
-export const customersQueryOptions = (searchParams = { sortBy: '', name: '' }) =>
+export const customersQueryOptions = (searchParams = { name: '' }) =>
   queryOptions<Customer[], unknown, Customer[]>({
-    queryKey: ['customers', searchParams.sortBy, searchParams.name],
+    queryKey: ['customers', searchParams.name],
     queryFn: () =>
       apiInstance
         .get('customers', {
