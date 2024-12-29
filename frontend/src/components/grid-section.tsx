@@ -3,14 +3,16 @@ import { AgGridReact } from 'ag-grid-react'
 import { useQuery } from '@tanstack/react-query'
 import { customersQueryOptions } from '@/api/query'
 import { useMemo, useState, useCallback } from 'react'
-import { ColDef, ValueFormatterParams, ClientSideRowModelModule } from 'ag-grid-community'
+import { ColDef, ValueFormatterParams, ClientSideRowModelModule, RowClickedEvent } from 'ag-grid-community'
 import type { Customer } from '@/api/types'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { debounce } from 'es-toolkit'
-
+import { DetailModal } from '@/components/detail-modal'
 export const GridSection = () => {
   const [searchName, setSearchName] = useState('')
+  const [selectedCustomerId, setSelectedCustomerId] = useState<number>()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const debouncedSetSearchName = useMemo(() => debounce((value: string) => setSearchName(value), 300), [setSearchName])
 
@@ -20,6 +22,14 @@ export const GridSection = () => {
     },
     [debouncedSetSearchName],
   )
+
+  const handleRowClick = useCallback((event: RowClickedEvent<Customer>) => {
+    const customerData = event.data
+    if (customerData) {
+      setSelectedCustomerId(customerData.id)
+      setIsModalOpen(true)
+    }
+  }, [])
 
   const columnDefs = useMemo<ColDef<Customer>[]>(
     () => [
@@ -92,8 +102,10 @@ export const GridSection = () => {
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           animateRows={true}
+          onRowClicked={handleRowClick}
         />
       </CardContent>
+      <DetailModal customerId={selectedCustomerId} open={isModalOpen} onOpenChange={setIsModalOpen} />
     </Card>
   )
 }

@@ -38,6 +38,11 @@ export const customersQueryOptions = (searchParams = { name: '' }) =>
     placeholderData: keepPreviousData,
   })
 
+/**
+ * 고객 구매 목록 조회 옵션
+ * @param id 고객 ID
+ * @returns 고객 구매 목록
+ */
 export const customerPurchasesQueryOptions = ({ id }: Partial<Pick<Customer, 'id'>>) =>
   queryOptions<Purchase[], unknown, PurchaseWithId[]>({
     queryKey: ['customerPurchases', id],
