@@ -9,13 +9,16 @@ import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { debounce } from 'es-toolkit'
 import { DetailModal } from '@/components/detail-modal'
+
 export const GridSection = () => {
   const [searchName, setSearchName] = useState('')
-  const [selectedCustomerId, setSelectedCustomerId] = useState<number>()
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer>()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const debouncedSetSearchName = useMemo(() => debounce((value: string) => setSearchName(value), 300), [setSearchName])
+  // 검색 입력 디바운싱
+  const debouncedSetSearchName = useMemo(() => debounce((value: string) => setSearchName(value), 500), [setSearchName])
 
+  /** 검색 입력 핸들러 */
   const handleSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       debouncedSetSearchName(e.target.value)
@@ -23,51 +26,48 @@ export const GridSection = () => {
     [debouncedSetSearchName],
   )
 
+  /** 행 클릭 핸들러 */
   const handleRowClick = useCallback((event: RowClickedEvent<Customer>) => {
     const customerData = event.data
     if (customerData) {
-      setSelectedCustomerId(customerData.id)
+      setSelectedCustomer(customerData)
       setIsModalOpen(true)
     }
   }, [])
 
-  const columnDefs = useMemo<ColDef<Customer>[]>(
-    () => [
-      {
-        field: 'id',
-        headerName: 'ID',
-        filter: true,
-        width: 100,
-        cellStyle: { display: 'flex', alignItems: 'center' },
+  const columnDefs: ColDef<Customer>[] = [
+    {
+      field: 'id',
+      headerName: 'ID',
+      filter: true,
+      width: 100,
+    },
+    {
+      field: 'name',
+      headerName: '이름',
+      filter: true,
+      flex: 1,
+    },
+    {
+      field: 'count',
+      headerName: '총 구매 횟수',
+      filter: 'agNumberColumnFilter',
+      valueFormatter: (params: ValueFormatterParams<Customer, number>) =>
+        params.value != null ? `${params.value}회` : '-',
+      flex: 1,
+    },
+    {
+      field: 'totalAmount',
+      headerName: '총 구매 금액',
+      filter: 'agNumberColumnFilter',
+      valueFormatter: (params: ValueFormatterParams<Customer, number>) =>
+        params.value != null ? `${params.value.toLocaleString()}원` : '-',
+      flex: 1,
+      cellStyle: {
+        textAlign: 'right',
       },
-      {
-        field: 'name',
-        headerName: '이름',
-        filter: true,
-        flex: 1,
-        cellStyle: { display: 'flex', alignItems: 'center' },
-      },
-      {
-        field: 'count',
-        headerName: '총 구매 횟수',
-        filter: 'agNumberColumnFilter',
-        valueFormatter: (params: ValueFormatterParams<Customer, number>) =>
-          params.value != null ? `${params.value}회` : '-',
-        flex: 1,
-        cellStyle: { display: 'flex', alignItems: 'center' },
-      },
-      {
-        field: 'totalAmount',
-        headerName: '총 구매 금액',
-        filter: 'agNumberColumnFilter',
-        valueFormatter: (params: ValueFormatterParams<Customer, number>) =>
-          params.value != null ? `${params.value.toLocaleString()}원` : '-',
-        flex: 1,
-        cellStyle: { display: 'flex', alignItems: 'center' },
-      },
-    ],
-    [],
-  )
+    },
+  ]
 
   const defaultColDef = useMemo(
     () => ({
@@ -105,7 +105,7 @@ export const GridSection = () => {
           onRowClicked={handleRowClick}
         />
       </CardContent>
-      <DetailModal customerId={selectedCustomerId} open={isModalOpen} onOpenChange={setIsModalOpen} />
+      <DetailModal customer={selectedCustomer} open={isModalOpen} onOpenChange={setIsModalOpen} />
     </Card>
   )
 }
