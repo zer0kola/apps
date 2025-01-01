@@ -1,0 +1,29 @@
+{
+  "name": "client",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "app": "pnpm --filter @app/web",
+    "ui": "pnpm --filter @repo/ui",
+    "api": "pnpm --filter @repo/api"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@supabase/ssr": "^0.5.2",
+    "prettier": "catalog:",
+    "turbo": "^2.3.0",
+    "typescript": "5.5.4"
+  },
+  "packageManager": "pnpm@9.6.0",
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "volta": {
+    "node": "20.9.0",
+    "pnpm": "9.6.0"
+  }
+}

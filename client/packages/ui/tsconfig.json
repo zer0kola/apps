@@ -1,0 +1,20 @@
+{
+  "extends": "@repo/typescript-config/react-library.json",
+  "compilerOptions": {},
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../apps/web/components/app-sidebar.tsx",
+    "../../apps/web/components/button-dropdown-mode.tsx",
+    "../../apps/web/components/chart-price.tsx",
+    "../../apps/web/components/modal-login.tsx",
+    "../../apps/web/components/nav-bar-header.tsx",
+    "../../apps/web/components/nav-main.tsx",
+    "../../apps/web/components/nav-projects.tsx",
+    "../../apps/web/components/nav-user.tsx",
+    "../../apps/web/components/search-main.tsx",
+    "../../apps/web/components/team-switcher.tsx",
+    "../../apps/web/utils/provider/theme-provider.tsx"
+  ],
+  "exclude": ["node_modules", "dist"]
+}
